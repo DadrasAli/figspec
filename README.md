@@ -139,13 +139,6 @@ pytest
 and composite figures — including regression tests for every bug found
 during development.
 
-## Security
-
-`python`/`*_transform` blocks in a config execute with full Python
-privileges — there is no sandbox, because `numpy`/`pandas` alone already
-reach the filesystem. Treat a config file (and any `.py` file it references)
-exactly like a script you are about to run: only render configs you trust.
-
 ## License
 
 [MIT](LICENSE)
