@@ -27,6 +27,7 @@ import copy
 import difflib
 import argparse
 import importlib.util
+import importlib.metadata
 from pathlib import Path
 
 import yaml
@@ -1755,10 +1756,23 @@ def _apply_cli_overrides(cfg, args):
     return cfg
 
 
+def _installed_version():
+    """The installed package version, or a clear fallback if unpackaged."""
+    try:
+        return importlib.metadata.version("figspec")
+    except importlib.metadata.PackageNotFoundError:
+        return "unknown (not installed as a package)"
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
         prog="figspec",
         description="Render a figure from a YAML plot or composite config.",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"figspec {_installed_version()}",
     )
     parser.add_argument(
         "--config",

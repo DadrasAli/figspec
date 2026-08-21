@@ -59,6 +59,7 @@ output_basename: "out/accuracy"
 figspec --config figure.yaml                 # render
 figspec --config figure.yaml --check         # validate without rendering
 figspec --config figure.yaml -o out/name --dpi 150 --format svg --format pdf
+figspec --version                            # print the installed version
 ```
 
 Paths behave the way a command-line tool should: everything is relative to

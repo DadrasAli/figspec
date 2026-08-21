@@ -31,6 +31,14 @@ def test_config_is_required(plotter):
         plotter.main([])
 
 
+def test_version_flag_short_circuits_before_config_is_required(plotter, capsys):
+    """--version must print and exit cleanly even with no --config given."""
+    with pytest.raises(SystemExit) as excinfo:
+        plotter.main(["--version"])
+    assert excinfo.value.code == 0
+    assert capsys.readouterr().out.strip() == f"figspec {plotter._installed_version()}"
+
+
 def test_a_missing_config_exits_non_zero(plotter, tmp_path):
     assert plotter.main(["--config", str(tmp_path / "nope.yaml")]) == 1
 
