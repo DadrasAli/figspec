@@ -10,9 +10,6 @@ figure with matplotlib.
 It is designed for research workflows where figures are repeatedly
 regenerated as results change and must remain reproducible from source.
 
-Specifications are plain YAML files, referred to as **configs**, matching
-the `--config` flag and the tool's own terminology.
-
 ## Install
 
 ```bash
