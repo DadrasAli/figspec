@@ -85,7 +85,17 @@ detected automatically — same command, no separate flag.
 [`examples/`](examples/) has one config per feature, each on a tiny
 (5-6 row) CSV so the output is easy to verify by eye against the source data.
 
-Clone the repository to run them, then from its root:
+**`pipx install` (above) does not include these.** It installs only the
+`figspec` module — enough to run configs against your own data — not the
+rest of the repository. The examples live in git, so trying them means
+cloning it:
+
+```bash
+git clone git@github.com:DadrasAli/figspec.git
+cd figspec
+```
+
+Then, from the repository root:
 
 ```bash
 figspec --config examples/configs/01_minimal.yaml
