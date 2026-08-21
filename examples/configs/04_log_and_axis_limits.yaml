@@ -1,0 +1,19 @@
+# y_log on a loss curve (a straight-ish line on a log axis is the usual
+# sanity check for exponential decay). y_axis_set: maxmin fits the data
+# with a 5% margin; x_axis_set here pins an explicit range instead.
+series:
+  - csv: "../csv/client_a.csv"
+    column: "loss"
+    label: "Client A loss"
+  - csv: "../csv/client_b.csv"
+    column: "loss"
+    label: "Client B loss"
+
+title: "Log y-axis + explicit x range"
+x_label: "Round"
+y_label: "Loss (log scale)"
+y_log: true
+y_axis_set: "maxmin"
+x_axis_set: [0.5, 6.5]
+use_grid: true
+output_basename: "out/04_log_and_axis_limits"

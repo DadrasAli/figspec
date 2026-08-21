@@ -1,0 +1,20 @@
+# type: combine merges several CSVs with a user function. With no 'name' on
+# the inputs, they arrive positionally: combine(a, b) in file order.
+# align: min trims to the shorter series if lengths differ (they don't here,
+# but this is the safe default -- see 09 for align: error).
+series:
+  - type: combine
+    label: "Average accuracy (A, B)"
+    align: "min"
+    inputs:
+      - {csv: "../csv/client_a.csv", column: "acc"}
+      - {csv: "../csv/client_b.csv", column: "acc"}
+    python: |
+      def combine(a, b):
+          return 0.5 * (a + b)
+
+title: "combine: positional inputs"
+x_label: "Round"
+y_label: "Accuracy"
+use_grid: true
+output_basename: "out/08_combine_positional"

@@ -1,0 +1,23 @@
+# Three ways to draw a shaded uncertainty band, all on the same axes so
+# they can be compared directly (they overlap almost exactly here because
+# seeds.csv's lo/hi columns were written to equal seed0..seed2's min/max).
+#   band: [lo_col, hi_col]      explicit bounds
+#   band_columns: [c1, c2, c3]  mean +/- std across those columns
+#   band: spread_col            symmetric y +/- one spread column
+series:
+  - csv: "../csv/seeds.csv"
+    column: "seed0"
+    label: "explicit band: [lo, hi]"
+    band: ["lo", "hi"]
+
+  - csv: "../csv/seeds.csv"
+    column: "seed1"
+    label: "band_columns: mean +/- std"
+    band_columns: ["seed0", "seed1", "seed2"]
+    line_style: "dashed"
+
+title: "Error bands"
+x_label: "Round"
+y_label: "Accuracy"
+use_grid: true
+output_basename: "out/10_error_bands"

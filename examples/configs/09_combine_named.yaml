@@ -1,0 +1,21 @@
+# With 'name' set on each input, combine() receives keyword arguments
+# instead -- clearer when the function isn't simply symmetric, like a
+# difference. align: error raises instead of silently trimming if the
+# input lengths ever stop matching -- a deliberate safety check.
+series:
+  - type: combine
+    label: "Client A - Client B"
+    align: "error"
+    inputs:
+      - {name: "a", csv: "../csv/client_a.csv", column: "acc"}
+      - {name: "b", csv: "../csv/client_b.csv", column: "acc"}
+    python: |
+      def combine(a, b):
+          return a - b
+
+title: "combine: named inputs (keyword args)"
+x_label: "Round"
+y_label: "Accuracy gap"
+y_axis_set: "maxmin"
+use_grid: true
+output_basename: "out/09_combine_named"

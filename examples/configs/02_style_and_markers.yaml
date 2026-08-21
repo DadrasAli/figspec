@@ -1,0 +1,31 @@
+# Two series, styled explicitly: colors, line styles, markers, width,
+# alpha, and a grid. Compare against 01 to see what the defaults were doing.
+series:
+  - csv: "../csv/client_a.csv"
+    column: "acc"
+    label: "Client A"
+    color: "#1f77b4"
+    line_style: "-"
+    marker: "o"
+    line_width: 2.5
+    alpha: 0.9
+    zorder: 2
+    
+  - csv: "../csv/client_b.csv"
+    column: "acc"
+    label: "Client B"
+    color: "#d62728"
+    line_style: "dashed"
+    marker: "s"
+    alpha: 0.9
+    zorder: 1
+
+title: "Two clients, explicit style"
+x_label: "Round"
+y_label: "Accuracy"
+use_grid: true
+grid_style: ":"
+minor_grid: true
+minor_grid_divisions: 2
+marker_size: 8
+output_basename: "out/02_style_and_markers"

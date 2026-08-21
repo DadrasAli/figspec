@@ -1,0 +1,19 @@
+# The default legend sits inside the axes (loc: best). legend_outside moves
+# it clear of the plot area; right_margin reserves the room for it.
+series:
+  - csv: "../csv/client_a.csv"
+    column: "acc"
+    label: "Client A"
+  - csv: "../csv/client_b.csv"
+    column: "acc"
+    label: "Client B"
+
+title: "Outside legend"
+x_label: "Round"
+y_label: "Accuracy"
+use_grid: true
+legend_outside: true
+legend_loc: "center left"
+legend_bbox: [1.02, 0.5]
+right_margin: 0.75
+output_basename: "out/12_outside_legend"

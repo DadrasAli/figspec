@@ -1,0 +1,21 @@
+# Free-form annotations in axes-relative coordinates. 'position' accepts
+# 9 named anchors (top_left, center, bottom_right, ...) or an [x, y] pair.
+series:
+  - csv: "../csv/client_a.csv"
+    column: "acc"
+    label: "Client A"
+
+title: "Text boxes"
+x_label: "Round"
+y_label: "Accuracy"
+use_grid: true
+text_boxes:
+  - text: "Named anchor:\ntop_left"
+    position: "top_left"
+  - text: "[x, y] position\nwith a styled box"
+    position: [0.5, 0.35]
+    box:
+      style: "round"
+      facecolor: "#fff6cc"
+      edgecolor: "#b8860b"
+output_basename: "out/11_text_boxes"

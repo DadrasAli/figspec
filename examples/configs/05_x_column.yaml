@@ -1,0 +1,15 @@
+# By default x is just 1..N (the row index). x_column plots against a real
+# column instead -- here, wallclock.csv has irregular step sizes
+# (0, 5, 20, 50, 100), which only x_column can represent correctly.
+x_column: "step"
+series:
+  - csv: "../csv/wallclock.csv"
+    column: "acc"
+    label: "Accuracy vs. training step"
+    marker: "o"
+
+title: "x_column: irregular x spacing"
+x_label: "Training step"
+y_label: "Accuracy"
+use_grid: true
+output_basename: "out/05_x_column"

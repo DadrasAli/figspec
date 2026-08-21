@@ -1,0 +1,18 @@
+# background_color switches to a dark figure. Ticks, spines, labels and the
+# legend frame all auto-flip to a readable foreground color, and the default
+# tab10 color cycle auto-brightens so it stays visible (see csv_plotter.py's
+# _apply_foreground_contrast / _auto_colors_for_background).
+series:
+  - csv: "../csv/client_a.csv"
+    column: "acc"
+    label: "Client A"
+  - csv: "../csv/client_b.csv"
+    column: "acc"
+    label: "Client B"
+
+title: "Dark background, auto contrast"
+x_label: "Round"
+y_label: "Accuracy"
+background_color: "#800020"
+use_grid: true
+output_basename: "out/03_dark_background"

@@ -1,0 +1,18 @@
+# Same idea as 06, but the function lives in transforms.py next to this
+# config and is referenced as "file.py:function_name". The file resolves
+# relative to THIS yaml, and is imported once even if reused elsewhere.
+series:
+  - csv: "../csv/noisy.csv"
+    column: "value"
+    label: "raw"
+  - csv: "../csv/noisy.csv"
+    column: "value"
+    label: "EMA smoothed (external transforms.py)"
+    line_style: "dashed"
+    y_transform: "../transforms.py:smooth_ema"
+
+title: "External transform: y_transform"
+x_label: "Round"
+y_label: "Value"
+use_grid: true
+output_basename: "out/07_transforms_external"

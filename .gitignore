@@ -1,0 +1,23 @@
+# Generated figures (regenerate with the commands in examples/README.md)
+examples/out/
+out/
+
+# Batch runner temp configs (only kept with --keep-temp-configs)
+.tmp_csv_plotter_configs/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Packaging
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Editor / OS cruft
+.idea/
+.vscode/
+.DS_Store

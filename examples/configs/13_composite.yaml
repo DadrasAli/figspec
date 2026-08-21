@@ -1,0 +1,26 @@
+# Assembles the two panels above into one 1x2 figure. series_overrides
+# restyles every series in every panel in-memory only -- 13a/13b on disk
+# are untouched. legends: false strips each panel's own legend in favour
+# of one deduplicated global_legend below the figure.
+kind: composite
+rows: 1
+columns: 2
+figsize: [11, 4.5]
+
+figures:
+  - {config: "13a_panel_accuracy.yaml", label: "(a)"}
+  - {config: "13b_panel_loss.yaml", label: "(b)"}
+
+series_overrides:
+  line_width: 2.5
+
+legends: false
+global_legend: true
+legend_loc: "lower center"
+legend_bbox: [0.5, -0.05]
+legend_columns: 2
+
+global_title: "Composite: two panels, shared legend"
+font_size_global_title: 16
+
+output_basename: "out/13_composite"
