@@ -4,20 +4,7 @@ Render matplotlib figures from a declarative YAML spec, backed by CSV data.
 
 Instead of writing plotting code, you describe the figure you want — series,
 styling, axes, legend, output format — in a YAML file, and `figspec` renders
-it. A config needs only a `series` list and an `output_basename`; every other
-key has a sensible default.
-
-```yaml
-series:
-  - csv: "data/accuracy.csv"
-    column: "acc"
-    label: "Client A"
-output_basename: "out/accuracy"
-```
-
-```bash
-figspec --config figure.yaml
-```
+it.
 
 ## Install
 
@@ -33,6 +20,18 @@ PyYAML. Every command below assumes it's on your `PATH` (i.e. the venv above
 is active).
 
 ## Usage
+
+A config needs only a `series` list and an `output_basename`; every other key
+has a sensible default.
+
+```yaml
+# figure.yaml
+series:
+  - csv: "data/accuracy.csv"
+    column: "acc"
+    label: "Client A"
+output_basename: "out/accuracy"
+```
 
 ```bash
 figspec --config figure.yaml                 # render
