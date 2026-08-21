@@ -1,0 +1,42 @@
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # The runners are headless; don't let matplotlib pick a GUI backend.
+      MPLBACKEND: Agg
+    strategy:
+      # Report every failing version, not just the first one.
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: pip install ".[test]"
+
+      - name: Run tests
+        run: pytest
+
+      - name: Render every example
+        # Catches breakage the unit tests would miss: the shipped configs
+        # must still render end to end through the installed CLI.
+        working-directory: examples
+        run: |
+          for f in configs/*.yaml; do
+            figspec --config "$f"
+          done

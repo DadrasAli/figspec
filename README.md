@@ -122,9 +122,19 @@ From that same virtualenv:
 pytest
 ```
 
-105 tests cover the config schema, rendering, external transforms, the CLI,
-and composite figures — including regression tests for every bug found
+The suite covers the config schema, rendering, external transforms, the CLI,
+and composite figures — including a regression test for every bug found
 during development.
+
+## Executable configs
+
+A config's `python` blocks and `*_transform` references are real Python,
+executed with the same privileges as `figspec` itself. That is what makes
+arbitrary transformations possible, and it means a config is code, not
+inert data.
+
+In practice: run your own configs freely. Treat one you didn't write like
+any other script someone hands you — read it first.
 
 ## License
 
