@@ -44,7 +44,7 @@ looks like:
 ```yaml
 # configs/config.yaml
 series:
-  - csv: "../csvs/accuracy.csv"
+  - csv: "csvs/accuracy.csv"
     column: "acc"
     label: "Client A"
 output_basename: "out/accuracy"
