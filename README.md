@@ -73,9 +73,7 @@ my-project/
 
 running the commands above from `my-project/` reads `csvs/accuracy.csv` and
 writes `out/accuracy.png`/`.pdf` — `out/` didn't need to exist beforehand,
-`figspec` creates it. See
-[How paths inside a config resolve](#how-paths-inside-a-config-resolve) for
-the full rules.
+`figspec` creates it.
 
 ## Examples
 
@@ -117,35 +115,6 @@ figspec --config configs/01_minimal.yaml --check
 | 11 | [11_text_boxes.yaml](examples/configs/11_text_boxes.yaml) | `text_boxes`: a named anchor and an `[x, y]` position with a styled box |
 | 12 | [12_outside_legend.yaml](examples/configs/12_outside_legend.yaml) | `legend_outside` + `legend_bbox` + `right_margin` |
 | 13 | [13_composite.yaml](examples/configs/13_composite.yaml) (panels: [13a](examples/configs/13a_panel_accuracy.yaml), [13b](examples/configs/13b_panel_loss.yaml)) | Composite figure: panel labels, `series_overrides`, deduplicated `global_legend`, `global_title` |
-
-Render every example at once (still from `examples/`):
-
-```bash
-for f in configs/*.yaml; do figspec --config "$f"; done
-```
-
-### How paths inside a config resolve
-
-| Path | Resolved relative to |
-|---|---|
-| `--config` on the command line | the directory you run from |
-| `output_basename` | the directory you run from |
-| `csv:` data files | the config file first, then the directory you run from |
-| `*_transform` `.py` references | the config file first, then the directory you run from |
-| a composite's panel `config:` references | the config file first, then the directory you run from |
-
-In short: **outputs land where you invoke the command**, and **inputs are
-found whether you write them relative to the config or relative to where you
-run**. A config that sits next to its data keeps working when called from a
-parent directory, and `figspec --config csvs/figure.yaml` puts `out/` in the
-current directory, not inside `csvs/`.
-
-To pin outputs to a fixed location regardless of where the command runs, give
-`output_basename` an absolute path, or override it per run:
-
-```bash
-figspec --config csvs/figure.yaml -o /data/figures/accuracy
-```
 
 ## Developing figspec
 
