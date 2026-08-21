@@ -29,17 +29,6 @@ activate.
 If you don't have `pipx`: `python3 -m pip install --user pipx && python3 -m
 pipx ensurepath`, then open a new terminal.
 
-<details>
-<summary>Alternative: plain <code>pip</code></summary>
-
-```bash
-pip install --user git+ssh://git@github.com/DadrasAli/figspec.git
-```
-
-Works, but installs the dependencies into your user environment rather than
-an isolated one. `pipx` is preferred for command-line tools.
-</details>
-
 ## Usage
 
 Run `figspec` from wherever your data and configs live. A config needs only
@@ -85,21 +74,15 @@ detected automatically — same command, no separate flag.
 [`examples/`](examples/) has one config per feature, each on a tiny
 (5-6 row) CSV so the output is easy to verify by eye against the source data.
 
-**`pipx install` (above) does not include these.** It installs only the
-`figspec` module — enough to run configs against your own data — not the
-rest of the repository. The examples live in git; this pulls down just the
-`examples/` directory, not the whole repository:
+**`pipx install` (above) does not include these** — it installs only the
+`figspec` module, not the rest of the repository. Download them separately:
 
 ```bash
-git clone --filter=blob:none --no-checkout --depth 1 --sparse \
-    git@github.com:DadrasAli/figspec.git figspec-examples
-cd figspec-examples
-git sparse-checkout init --no-cone
-git sparse-checkout set '/examples/*'
-git checkout
+git clone git@github.com:DadrasAli/figspec.git
+cd figspec
 ```
 
-Then, from `figspec-examples/`:
+Then, from the repository root:
 
 ```bash
 figspec --config examples/configs/01_minimal.yaml
