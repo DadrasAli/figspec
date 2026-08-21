@@ -45,7 +45,7 @@ default.
 ```yaml
 # figure.yaml
 series:
-  - csv: "data/accuracy.csv"
+  - csv: "accuracy.csv"
     column: "acc"
     label: "Client A"
 output_basename: "out/accuracy"
