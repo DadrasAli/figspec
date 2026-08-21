@@ -40,10 +40,6 @@ figspec --config figure.yaml
 - **Output**: PNG/PDF/SVG/EPS/JPEG/TIFF, any subset, configurable DPI,
   overridable from the CLI (`-o`, `--dpi`, `--format`)
 
-See [`examples/`](examples/) for a numbered tour of every capability above,
-each demonstrated on a tiny (5-6 row) CSV so the output is easy to verify by
-eye.
-
 ## Install
 
 ```bash
@@ -54,7 +50,8 @@ pip install -e .
 ```
 
 This installs a `figspec` command backed by matplotlib, numpy, pandas, and
-PyYAML.
+PyYAML. Every command below assumes it's on your `PATH` (i.e. the venv above
+is active).
 
 ## Usage
 
@@ -66,6 +63,68 @@ figspec --config figure.yaml -o out/name --dpi 150 --format svg --format pdf
 
 A composite config (multiple panels assembled from other configs) is
 detected automatically — same command, no separate flag.
+
+## Examples
+
+[`examples/`](examples/) has one config per feature above, each on a tiny
+(5-6 row) CSV so the output is easy to verify by eye against the source data.
+
+**Run every command in this section from the `examples/` directory** —
+`cd examples` first. That's not incidental: `output_basename` inside each
+config is written as `out/name`, which is resolved relative to wherever you
+invoke `figspec` from (see the note below), so `examples/` is where the
+outputs are set up to land.
+
+```bash
+cd examples
+figspec --config configs/01_minimal.yaml
+```
+
+Outputs land in `examples/out/`. Validate a config without rendering it:
+
+```bash
+figspec --config configs/01_minimal.yaml --check
+```
+
+| # | Config | Demonstrates |
+|---|---|---|
+| 01 | [01_minimal.yaml](examples/configs/01_minimal.yaml) | Every key besides `series`/`output_basename` is optional |
+| 02 | [02_style_and_markers.yaml](examples/configs/02_style_and_markers.yaml) | Per-series color, line style, marker, width, alpha, zorder, grid + minor grid |
+| 03 | [03_dark_background.yaml](examples/configs/03_dark_background.yaml) | `background_color`; auto foreground contrast and auto-brightened colors |
+| 04 | [04_log_and_axis_limits.yaml](examples/configs/04_log_and_axis_limits.yaml) | `y_log`, `y_axis_set: maxmin`, explicit `x_axis_set` |
+| 05 | [05_x_column.yaml](examples/configs/05_x_column.yaml) | `x_column` — plot against a real, irregularly-spaced column instead of the row index |
+| 06 | [06_transforms_inline.yaml](examples/configs/06_transforms_inline.yaml) | Inline `y_python` transform (EMA smoothing), raw vs. transformed side by side |
+| 07 | [07_transforms_external.yaml](examples/configs/07_transforms_external.yaml) + [transforms.py](examples/transforms.py) | Same transform, defined in an external `.py` file and referenced as `y_transform: "file.py:function"` |
+| 08 | [08_combine_positional.yaml](examples/configs/08_combine_positional.yaml) | `type: combine`, positional inputs, `align: min` |
+| 09 | [09_combine_named.yaml](examples/configs/09_combine_named.yaml) | `combine`, named inputs (keyword args), `align: error` |
+| 10 | [10_error_bands.yaml](examples/configs/10_error_bands.yaml) | Two band spellings on one figure: explicit `band: [lo, hi]` and `band_columns` (mean ± std) |
+| 11 | [11_text_boxes.yaml](examples/configs/11_text_boxes.yaml) | `text_boxes`: a named anchor and an `[x, y]` position with a styled box |
+| 12 | [12_outside_legend.yaml](examples/configs/12_outside_legend.yaml) | `legend_outside` + `legend_bbox` + `right_margin` |
+| 13 | [13_composite.yaml](examples/configs/13_composite.yaml) (panels: [13a](examples/configs/13a_panel_accuracy.yaml), [13b](examples/configs/13b_panel_loss.yaml)) | Composite figure: panel labels, `series_overrides`, deduplicated `global_legend`, `global_title` |
+
+Render every example at once:
+
+```bash
+cd examples
+for f in configs/*.yaml; do figspec --config "$f"; done
+```
+
+### How paths inside a config resolve
+
+This trips people up, so it's explicit here rather than left to be
+discovered by a `FileNotFoundError`:
+
+- **`csv:` data paths, `*_transform` file references, and a composite's
+  panel `config:` references all resolve relative to the YAML file that
+  contains them.** A config finds its data and its `transforms.py` no
+  matter which directory you run `figspec` from.
+- **`output_basename` is the one exception** — it resolves relative to the
+  directory you *run the command from* (the same convention as `-o` in most
+  CLI tools), so you control where results land. This is why the examples
+  above must be run from `examples/`: each config's `output_basename` is
+  written as `out/name`, meaning "put it in `out/`, relative to wherever I'm
+  invoked" — which is `examples/out/` only if your cwd is `examples/`.
+  Running from `examples/configs/` instead would create `configs/out/`.
 
 ## Testing
 
