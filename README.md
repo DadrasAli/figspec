@@ -1,6 +1,6 @@
 # figspec
 
-## Publication-quality figures from declarative YAML specifications
+## Config-Based Figure Generation
 
 `figspec` separates figure specification from rendering code. A config
 defines the data sources, series, transformations, axes, annotations, and
@@ -13,7 +13,7 @@ regenerated as results change and must remain reproducible from source.
 ## Install
 
 ```bash
-pipx install git+ssh://git@github.com/DadrasAli/figspec.git
+pipx install git+https://github.com/DadrasAli/figspec.git
 ```
 
 This puts a `figspec` command on your `PATH` — available in every terminal
@@ -69,7 +69,7 @@ writes `out/accuracy.png`/`.pdf` — `out/` didn't need to exist beforehand,
 `figspec` module, not the rest of the repository. Download them separately:
 
 ```bash
-git clone git@github.com:DadrasAli/figspec.git
+git clone https://github.com/DadrasAli/figspec.git
 cd figspec/examples
 ```
 
@@ -104,7 +104,7 @@ affect it. To work on the code itself, use an editable install in a
 virtualenv:
 
 ```bash
-git clone git@github.com:DadrasAli/figspec.git
+git clone https://github.com/DadrasAli/figspec.git
 cd figspec
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[test]"
