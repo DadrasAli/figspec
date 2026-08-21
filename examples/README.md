@@ -38,8 +38,8 @@ Not covered by a dedicated config (they're CLI/output concerns, not YAML):
 # override output path, dpi, and formats without editing the file
 python ../csv_plotter.py --config configs/01_minimal.yaml -o out/custom --dpi 150 --format svg --format pdf
 
-# render every config in a directory, with a key override applied to each
-python ../csv_plotter_batch_run.py --config-dir configs --plotter ../csv_plotter.py --set dpi=150
+# render every config in a directory
+for f in configs/*.yaml; do python ../csv_plotter.py --config "$f"; done
 ```
 
 ## Two things worth knowing before you write your own
@@ -58,11 +58,3 @@ python ../csv_plotter_batch_run.py --config-dir configs --plotter ../csv_plotter
 - **A config's `python`/`_transform` code runs with full privileges** — no
   sandbox. Only render configs (and reference `.py` files) you trust, same
   as running any other script.
-- **`--set` from the batch runner writes the same key into every config in
-  the directory**, including composites. Composite configs accept a
-  different key set than single-figure configs (no `line_width`, no
-  `colors`, ...) — a key valid only on single figures will error on any
-  composite config in that folder. `series_overrides` is the composite
-  equivalent of a figure-level style key; `dpi` and `formats` are accepted
-  by both, so they're the safe `--set` targets when a directory mixes both
-  kinds of config (see `13_composite.yaml` for `series_overrides`).
