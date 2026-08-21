@@ -19,27 +19,6 @@ output_basename: "out/accuracy"
 figspec --config figure.yaml
 ```
 
-## Features
-
-- **Two series types**: `single` (one CSV column) and `combine` (several
-  CSVs merged row-wise by a Python function, positional or keyword args)
-- **Transforms**: inline `y_python`/`df_python` blocks, or reference a
-  function in an external `.py` file with `y_transform: "file.py:fn"` —
-  reusable across configs, real editor support
-- **Error bands**: explicit `[lo, hi]` columns, `band_columns` (mean ± std
-  across seed columns), or a symmetric spread column
-- **Composite figures**: assemble a grid of panels from existing plot
-  configs, with panel labels, a deduplicated global legend, and
-  `series_overrides` that restyle every panel without touching the
-  referenced files
-- **Full styling control**: colors, line styles (named or custom dash
-  patterns), markers, log axes, grids, dark backgrounds with automatic
-  foreground contrast, LaTeX rendering, free-form text boxes
-- **Validation**: unknown keys are rejected with a "did you mean" suggestion,
-  not silently ignored; `--check` validates a config without rendering it
-- **Output**: PNG/PDF/SVG/EPS/JPEG/TIFF, any subset, configurable DPI,
-  overridable from the CLI (`-o`, `--dpi`, `--format`)
-
 ## Install
 
 ```bash
@@ -66,7 +45,7 @@ detected automatically — same command, no separate flag.
 
 ## Examples
 
-[`examples/`](examples/) has one config per feature above, each on a tiny
+[`examples/`](examples/) has one config per feature, each on a tiny
 (5-6 row) CSV so the output is easy to verify by eye against the source data.
 
 Run these from the repository root:
