@@ -92,11 +92,7 @@ Then, from `examples/`:
 figspec --config configs/01_minimal.yaml
 ```
 
-Outputs land in `out/`. Validate a config without rendering it:
-
-```bash
-figspec --config configs/01_minimal.yaml --check
-```
+Outputs land in `out/`.
 
 | # | Config | Demonstrates |
 |---|---|---|
