@@ -122,7 +122,7 @@ From that same virtualenv:
 pytest
 ```
 
-104 tests cover the config schema, rendering, external transforms, the CLI,
+105 tests cover the config schema, rendering, external transforms, the CLI,
 and composite figures — including regression tests for every bug found
 during development.
 
