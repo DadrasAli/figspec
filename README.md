@@ -18,20 +18,33 @@ used by the `--config` flag and the tool's own messages.
 ## Install
 
 ```bash
-git clone git@github.com:DadrasAli/figspec.git
-cd figspec
-python -m venv .venv && source .venv/bin/activate
-pip install -e .
+pipx install git+ssh://git@github.com/DadrasAli/figspec.git
 ```
 
-This installs a `figspec` command backed by matplotlib, numpy, pandas, and
-PyYAML. Every command below assumes it's on your `PATH` (i.e. the venv above
-is active).
+This puts a `figspec` command on your `PATH` — available in every terminal
+and every directory, with its dependencies (matplotlib, numpy, pandas,
+PyYAML) isolated from the rest of your Python environment. No virtualenv to
+activate.
+
+If you don't have `pipx`: `python3 -m pip install --user pipx && python3 -m
+pipx ensurepath`, then open a new terminal.
+
+<details>
+<summary>Alternative: plain <code>pip</code></summary>
+
+```bash
+pip install --user git+ssh://git@github.com/DadrasAli/figspec.git
+```
+
+Works, but installs the dependencies into your user environment rather than
+an isolated one. `pipx` is preferred for command-line tools.
+</details>
 
 ## Usage
 
-A config needs only a `series` list and an `output_basename`; every other key
-has a sensible default.
+Run `figspec` from wherever your data and configs live. A config needs only
+a `series` list and an `output_basename`; every other key has a sensible
+default.
 
 ```yaml
 # figure.yaml
@@ -48,6 +61,21 @@ figspec --config figure.yaml --check         # validate without rendering
 figspec --config figure.yaml -o out/name --dpi 150 --format svg --format pdf
 ```
 
+Paths behave the way a command-line tool should: everything is relative to
+the directory you run from. Given this layout,
+
+```
+my-project/
+├── csvs/
+│   ├── accuracy.csv
+│   └── figure.yaml     # output_basename: "out/accuracy"
+```
+
+running `figspec --config csvs/figure.yaml` from `my-project/` writes
+`my-project/out/accuracy.png`. See
+[How paths inside a config resolve](#how-paths-inside-a-config-resolve) for
+the full rules.
+
 A composite config (multiple panels assembled from other configs) is
 detected automatically — same command, no separate flag.
 
@@ -56,7 +84,7 @@ detected automatically — same command, no separate flag.
 [`examples/`](examples/) has one config per feature, each on a tiny
 (5-6 row) CSV so the output is easy to verify by eye against the source data.
 
-Run these from the repository root:
+Clone the repository to run them, then from its root:
 
 ```bash
 figspec --config examples/configs/01_minimal.yaml
@@ -92,30 +120,49 @@ for f in examples/configs/*.yaml; do figspec --config "$f"; done
 
 ### How paths inside a config resolve
 
-This trips people up, so it's explicit here rather than left to be
-discovered by a `FileNotFoundError`:
+| Path | Resolved relative to |
+|---|---|
+| `--config` on the command line | the directory you run from |
+| `output_basename` | the directory you run from |
+| `csv:` data files | the config file first, then the directory you run from |
+| `*_transform` `.py` references | the config file first, then the directory you run from |
+| a composite's panel `config:` references | the config file first, then the directory you run from |
 
-- **`csv:` data paths, `*_transform` file references, and a composite's
-  panel `config:` references all resolve relative to the YAML file that
-  contains them.** A config finds its data and its `transforms.py` no
-  matter which directory you run `figspec` from.
-- **`output_basename` is the one exception** — it resolves relative to the
-  directory you *run the command from*, not to the config file (the same
-  convention as `-o` in most CLI tools), so you control where results land.
+In short: **outputs land where you invoke the command**, and **inputs are
+found whether you write them relative to the config or relative to where you
+run**. A config that sits next to its data keeps working when called from a
+parent directory, and `figspec --config csvs/figure.yaml` puts `out/` in the
+current directory, not inside `csvs/`.
 
-That's why the example configs say `output_basename: "examples/out/..."` and
-the commands above are run from the repository root. If you'd rather keep
-your own configs runnable from anywhere, give `output_basename` an absolute
-path, or override it per-run with `-o`:
+To pin outputs to a fixed location regardless of where the command runs, give
+`output_basename` an absolute path, or override it per run:
 
 ```bash
-figspec --config examples/configs/01_minimal.yaml -o /tmp/my_figure
+figspec --config csvs/figure.yaml -o /data/figures/accuracy
 ```
 
-## Testing
+## Developing figspec
+
+The `pipx` install above is a frozen snapshot — edits to the source won't
+affect it. To work on the code itself, use an editable install in a
+virtualenv:
 
 ```bash
+git clone git@github.com:DadrasAli/figspec.git
+cd figspec
+python -m venv .venv && source .venv/bin/activate
 pip install -e ".[test]"
+```
+
+Inside that activated virtualenv, `figspec` runs your working copy, and
+changes take effect immediately. Note that the virtualenv must be
+re-activated (`source .venv/bin/activate`) in each new terminal.
+
+### Testing
+
+From that same virtualenv:
+
+```bash
 pytest
 ```
 
