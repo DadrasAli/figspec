@@ -38,24 +38,23 @@ Then open a new terminal (this step adds `pipx`'s install location to your
 
 ## Usage
 
-Run `figspec` from wherever your data and configs live. A config needs only
-a `series` list and an `output_basename`; every other key has a sensible
-default.
+Run `figspec` from any directory you want. The minimal starter YAML file
+looks like:
 
 ```yaml
-# figure.yaml
+# configs/config.yaml
 series:
-  - csv: "accuracy.csv"
+  - csv: "../csvs/accuracy.csv"
     column: "acc"
     label: "Client A"
 output_basename: "out/accuracy"
 ```
 
 ```bash
-figspec --config figure.yaml                 # render
-figspec --config figure.yaml --check         # validate without rendering
-figspec --config figure.yaml -o out/name --dpi 150 --format svg --format pdf
-figspec --version                            # print the installed version
+figspec --config configs/config.yaml                 # render
+figspec --config configs/config.yaml --check          # validate without rendering
+figspec --config configs/config.yaml --dpi 150 --format svg --format pdf
+figspec --version                                     # print the installed version
 ```
 
 Paths behave the way a command-line tool should: everything is relative to
@@ -64,12 +63,17 @@ the directory you run from. Given this layout,
 ```
 my-project/
 ├── csvs/
-│   ├── accuracy.csv
-│   └── figure.yaml     # output_basename: "out/accuracy"
+│   └── accuracy.csv
+├── configs/
+│   └── config.yaml     # output_basename: "out/accuracy"
+└── out/
+    ├── accuracy.png
+    └── accuracy.pdf
 ```
 
-running `figspec --config csvs/figure.yaml` from `my-project/` writes
-`my-project/out/accuracy.png`. See
+running the commands above from `my-project/` reads `csvs/accuracy.csv` and
+writes `out/accuracy.png`/`.pdf` — `out/` didn't need to exist beforehand,
+`figspec` creates it. See
 [How paths inside a config resolve](#how-paths-inside-a-config-resolve) for
 the full rules.
 
