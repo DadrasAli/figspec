@@ -21,16 +21,6 @@ and every directory, with its dependencies (matplotlib, numpy, pandas,
 PyYAML) isolated from the rest of your Python environment. No virtualenv to
 activate.
 
-If you don't have `pipx` yet:
-
-```bash
-python3 -m pip install --user pipx
-python3 -m pipx ensurepath
-```
-
-Then open a new terminal (this step adds `pipx`'s install location to your
-`PATH`, which only takes effect in shells started afterward).
-
 ## Usage
 
 Run `figspec` from any directory you want. The minimal starter YAML file
