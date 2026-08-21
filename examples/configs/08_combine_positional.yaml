@@ -7,8 +7,8 @@ series:
     label: "Average accuracy (A, B)"
     align: "min"
     inputs:
-      - {csv: "csv/client_a.csv", column: "acc"}
-      - {csv: "csv/client_b.csv", column: "acc"}
+      - {csv: "csvs/client_a.csv", column: "acc"}
+      - {csv: "csvs/client_b.csv", column: "acc"}
     python: |
       def combine(a, b):
           return 0.5 * (a + b)

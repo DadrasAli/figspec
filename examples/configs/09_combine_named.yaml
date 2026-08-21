@@ -7,8 +7,8 @@ series:
     label: "Client A - Client B"
     align: "error"
     inputs:
-      - {name: "a", csv: "csv/client_a.csv", column: "acc"}
-      - {name: "b", csv: "csv/client_b.csv", column: "acc"}
+      - {name: "a", csv: "csvs/client_a.csv", column: "acc"}
+      - {name: "b", csv: "csvs/client_b.csv", column: "acc"}
     python: |
       def combine(a, b):
           return a - b

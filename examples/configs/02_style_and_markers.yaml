@@ -1,7 +1,7 @@
 # Two series, styled explicitly: colors, line styles, markers, width,
 # alpha, and a grid. Compare against 01 to see what the defaults were doing.
 series:
-  - csv: "csv/client_a.csv"
+  - csv: "csvs/client_a.csv"
     column: "acc"
     label: "Client A"
     color: "#1f77b4"
@@ -11,7 +11,7 @@ series:
     alpha: 0.9
     zorder: 2
     
-  - csv: "csv/client_b.csv"
+  - csv: "csvs/client_b.csv"
     column: "acc"
     label: "Client B"
     color: "#d62728"

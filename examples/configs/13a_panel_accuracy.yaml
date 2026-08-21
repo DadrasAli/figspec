@@ -2,10 +2,10 @@
 # also renders standalone:
 #   figspec --config configs/13a_panel_accuracy.yaml
 series:
-  - csv: "csv/client_a.csv"
+  - csv: "csvs/client_a.csv"
     column: "acc"
     label: "Client A"
-  - csv: "csv/client_b.csv"
+  - csv: "csvs/client_b.csv"
     column: "acc"
     label: "Client B"
 title: "Accuracy"

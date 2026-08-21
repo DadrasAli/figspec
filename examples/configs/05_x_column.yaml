@@ -3,7 +3,7 @@
 # (0, 5, 20, 50, 100), which only x_column can represent correctly.
 x_column: "step"
 series:
-  - csv: "csv/wallclock.csv"
+  - csv: "csvs/wallclock.csv"
     column: "acc"
     label: "Accuracy vs. training step"
     marker: "o"

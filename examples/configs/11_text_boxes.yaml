@@ -1,7 +1,7 @@
 # Free-form annotations in axes-relative coordinates. 'position' accepts
 # 9 named anchors (top_left, center, bottom_right, ...) or an [x, y] pair.
 series:
-  - csv: "csv/client_a.csv"
+  - csv: "csvs/client_a.csv"
     column: "acc"
     label: "Client A"
 

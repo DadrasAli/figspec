@@ -5,12 +5,12 @@
 #   band_columns: [c1, c2, c3]  mean +/- std across those columns
 #   band: spread_col            symmetric y +/- one spread column
 series:
-  - csv: "csv/seeds.csv"
+  - csv: "csvs/seeds.csv"
     column: "seed0"
     label: "explicit band: [lo, hi]"
     band: ["lo", "hi"]
 
-  - csv: "csv/seeds.csv"
+  - csv: "csvs/seeds.csv"
     column: "seed1"
     label: "band_columns: mean +/- std"
     band_columns: ["seed0", "seed1", "seed2"]

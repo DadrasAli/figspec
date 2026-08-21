@@ -2,10 +2,10 @@
 # config and is referenced as "file.py:function_name". The file resolves
 # relative to THIS yaml, and is imported once even if reused elsewhere.
 series:
-  - csv: "csv/noisy.csv"
+  - csv: "csvs/noisy.csv"
     column: "value"
     label: "raw"
-  - csv: "csv/noisy.csv"
+  - csv: "csvs/noisy.csv"
     column: "value"
     label: "EMA smoothed (external transforms.py)"
     line_style: "dashed"

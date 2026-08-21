@@ -3,10 +3,10 @@
 # tab10 color cycle auto-brightens so it stays visible (see figspec.py's
 # _apply_foreground_contrast / _auto_colors_for_background).
 series:
-  - csv: "csv/client_a.csv"
+  - csv: "csvs/client_a.csv"
     column: "acc"
     label: "Client A"
-  - csv: "csv/client_b.csv"
+  - csv: "csvs/client_b.csv"
     column: "acc"
     label: "Client B"
 

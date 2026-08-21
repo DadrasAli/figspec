@@ -29,7 +29,7 @@ looks like:
 ```yaml
 # configs/config.yaml
 series:
-  - csv: "csv/accuracy.csv"
+  - csv: "csvs/accuracy.csv"
     column: "acc"
     label: "Client A"
 output_basename: "out/accuracy"
@@ -46,8 +46,8 @@ Paths behave the way a command-line tool should: everything is relative to
 the directory you run from. Given this layout,
 
 ```
-examples/
-├── csv/
+my-project/
+├── csvs/
 │   └── accuracy.csv
 ├── configs/
 │   └── config.yaml     # output_basename: "out/accuracy"
@@ -56,7 +56,7 @@ examples/
     └── accuracy.pdf
 ```
 
-running the commands above from `examples/` reads `csv/accuracy.csv` and
+running the commands above from `my-project/` reads `csvs/accuracy.csv` and
 writes `out/accuracy.png`/`.pdf` — `out/` didn't need to exist beforehand,
 `figspec` creates it.
 
