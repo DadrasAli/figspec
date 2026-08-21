@@ -69,21 +69,16 @@ detected automatically — same command, no separate flag.
 [`examples/`](examples/) has one config per feature above, each on a tiny
 (5-6 row) CSV so the output is easy to verify by eye against the source data.
 
-**Run every command in this section from the `examples/` directory** —
-`cd examples` first. That's not incidental: `output_basename` inside each
-config is written as `out/name`, which is resolved relative to wherever you
-invoke `figspec` from (see the note below), so `examples/` is where the
-outputs are set up to land.
+Run these from the repository root:
 
 ```bash
-cd examples
-figspec --config configs/01_minimal.yaml
+figspec --config examples/configs/01_minimal.yaml
 ```
 
 Outputs land in `examples/out/`. Validate a config without rendering it:
 
 ```bash
-figspec --config configs/01_minimal.yaml --check
+figspec --config examples/configs/01_minimal.yaml --check
 ```
 
 | # | Config | Demonstrates |
@@ -105,8 +100,7 @@ figspec --config configs/01_minimal.yaml --check
 Render every example at once:
 
 ```bash
-cd examples
-for f in configs/*.yaml; do figspec --config "$f"; done
+for f in examples/configs/*.yaml; do figspec --config "$f"; done
 ```
 
 ### How paths inside a config resolve
@@ -119,12 +113,17 @@ discovered by a `FileNotFoundError`:
   contains them.** A config finds its data and its `transforms.py` no
   matter which directory you run `figspec` from.
 - **`output_basename` is the one exception** — it resolves relative to the
-  directory you *run the command from* (the same convention as `-o` in most
-  CLI tools), so you control where results land. This is why the examples
-  above must be run from `examples/`: each config's `output_basename` is
-  written as `out/name`, meaning "put it in `out/`, relative to wherever I'm
-  invoked" — which is `examples/out/` only if your cwd is `examples/`.
-  Running from `examples/configs/` instead would create `configs/out/`.
+  directory you *run the command from*, not to the config file (the same
+  convention as `-o` in most CLI tools), so you control where results land.
+
+That's why the example configs say `output_basename: "examples/out/..."` and
+the commands above are run from the repository root. If you'd rather keep
+your own configs runnable from anywhere, give `output_basename` an absolute
+path, or override it per-run with `-o`:
+
+```bash
+figspec --config examples/configs/01_minimal.yaml -o /tmp/my_figure
+```
 
 ## Testing
 

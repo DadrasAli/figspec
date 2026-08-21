@@ -15,4 +15,4 @@ x_label: "Round"
 y_label: "Accuracy"
 background_color: "#800020"
 use_grid: true
-output_basename: "out/03_dark_background"
+output_basename: "examples/out/03_dark_background"

@@ -16,4 +16,4 @@ legend_outside: true
 legend_loc: "center left"
 legend_bbox: [1.02, 0.5]
 right_margin: 0.75
-output_basename: "out/12_outside_legend"
+output_basename: "examples/out/12_outside_legend"

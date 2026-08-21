@@ -15,4 +15,4 @@ title: "External transform: y_transform"
 x_label: "Round"
 y_label: "Value"
 use_grid: true
-output_basename: "out/07_transforms_external"
+output_basename: "examples/out/07_transforms_external"

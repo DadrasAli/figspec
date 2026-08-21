@@ -17,4 +17,4 @@ title: "combine: positional inputs"
 x_label: "Round"
 y_label: "Accuracy"
 use_grid: true
-output_basename: "out/08_combine_positional"
+output_basename: "examples/out/08_combine_positional"

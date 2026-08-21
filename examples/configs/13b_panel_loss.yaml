@@ -10,4 +10,4 @@ x_label: "Round"
 y_label: "Loss"
 y_log: true
 use_grid: true
-output_basename: "out/13b_panel_loss"
+output_basename: "examples/out/13b_panel_loss"

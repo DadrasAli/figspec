@@ -21,4 +21,4 @@ title: "Inline transform: y_python"
 x_label: "Round"
 y_label: "Value"
 use_grid: true
-output_basename: "out/06_transforms_inline"
+output_basename: "examples/out/06_transforms_inline"

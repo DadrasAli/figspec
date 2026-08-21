@@ -18,4 +18,4 @@ text_boxes:
       style: "round"
       facecolor: "#fff6cc"
       edgecolor: "#b8860b"
-output_basename: "out/11_text_boxes"
+output_basename: "examples/out/11_text_boxes"

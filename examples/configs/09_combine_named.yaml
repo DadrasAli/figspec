@@ -18,4 +18,4 @@ x_label: "Round"
 y_label: "Accuracy gap"
 y_axis_set: "maxmin"
 use_grid: true
-output_basename: "out/09_combine_named"
+output_basename: "examples/out/09_combine_named"

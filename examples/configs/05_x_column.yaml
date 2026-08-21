@@ -12,4 +12,4 @@ title: "x_column: irregular x spacing"
 x_label: "Training step"
 y_label: "Accuracy"
 use_grid: true
-output_basename: "out/05_x_column"
+output_basename: "examples/out/05_x_column"

@@ -28,4 +28,4 @@ grid_style: ":"
 minor_grid: true
 minor_grid_divisions: 2
 marker_size: 8
-output_basename: "out/02_style_and_markers"
+output_basename: "examples/out/02_style_and_markers"

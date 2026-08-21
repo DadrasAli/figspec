@@ -20,4 +20,4 @@ title: "Error bands"
 x_label: "Round"
 y_label: "Accuracy"
 use_grid: true
-output_basename: "out/10_error_bands"
+output_basename: "examples/out/10_error_bands"

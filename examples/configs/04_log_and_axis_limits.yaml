@@ -16,4 +16,4 @@ y_log: true
 y_axis_set: "maxmin"
 x_axis_set: [0.5, 6.5]
 use_grid: true
-output_basename: "out/04_log_and_axis_limits"
+output_basename: "examples/out/04_log_and_axis_limits"
