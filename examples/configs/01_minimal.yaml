@@ -1,7 +1,7 @@
 # The absolute minimum: a 'series' list and an 'output_basename'.
 # Every other key (title, colors, grid, figsize, ...) takes its default.
 series:
-  - csv: "../csv/client_a.csv"
+  - csv: "csv/client_a.csv"
     column: "acc"
     label: "Client A accuracy"
-output_basename: "examples/out/01_minimal"
+output_basename: "out/01_minimal"

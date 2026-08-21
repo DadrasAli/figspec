@@ -23,4 +23,4 @@ legend_columns: 2
 global_title: "Composite: two panels, shared legend"
 font_size_global_title: 16
 
-output_basename: "examples/out/13_composite"
+output_basename: "out/13_composite"

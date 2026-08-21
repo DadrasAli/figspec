@@ -7,8 +7,8 @@ series:
     label: "Average accuracy (A, B)"
     align: "min"
     inputs:
-      - {csv: "../csv/client_a.csv", column: "acc"}
-      - {csv: "../csv/client_b.csv", column: "acc"}
+      - {csv: "csv/client_a.csv", column: "acc"}
+      - {csv: "csv/client_b.csv", column: "acc"}
     python: |
       def combine(a, b):
           return 0.5 * (a + b)
@@ -17,4 +17,4 @@ title: "combine: positional inputs"
 x_label: "Round"
 y_label: "Accuracy"
 use_grid: true
-output_basename: "examples/out/08_combine_positional"
+output_basename: "out/08_combine_positional"

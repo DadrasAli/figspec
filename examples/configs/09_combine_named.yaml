@@ -7,8 +7,8 @@ series:
     label: "Client A - Client B"
     align: "error"
     inputs:
-      - {name: "a", csv: "../csv/client_a.csv", column: "acc"}
-      - {name: "b", csv: "../csv/client_b.csv", column: "acc"}
+      - {name: "a", csv: "csv/client_a.csv", column: "acc"}
+      - {name: "b", csv: "csv/client_b.csv", column: "acc"}
     python: |
       def combine(a, b):
           return a - b
@@ -18,4 +18,4 @@ x_label: "Round"
 y_label: "Accuracy gap"
 y_axis_set: "maxmin"
 use_grid: true
-output_basename: "examples/out/09_combine_named"
+output_basename: "out/09_combine_named"

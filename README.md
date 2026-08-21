@@ -87,19 +87,19 @@ the full rules.
 
 ```bash
 git clone git@github.com:DadrasAli/figspec.git
-cd figspec
+cd figspec/examples
 ```
 
-Then, from the repository root:
+Then, from `examples/`:
 
 ```bash
-figspec --config examples/configs/01_minimal.yaml
+figspec --config configs/01_minimal.yaml
 ```
 
-Outputs land in `examples/out/`. Validate a config without rendering it:
+Outputs land in `out/`. Validate a config without rendering it:
 
 ```bash
-figspec --config examples/configs/01_minimal.yaml --check
+figspec --config configs/01_minimal.yaml --check
 ```
 
 | # | Config | Demonstrates |
@@ -118,10 +118,10 @@ figspec --config examples/configs/01_minimal.yaml --check
 | 12 | [12_outside_legend.yaml](examples/configs/12_outside_legend.yaml) | `legend_outside` + `legend_bbox` + `right_margin` |
 | 13 | [13_composite.yaml](examples/configs/13_composite.yaml) (panels: [13a](examples/configs/13a_panel_accuracy.yaml), [13b](examples/configs/13b_panel_loss.yaml)) | Composite figure: panel labels, `series_overrides`, deduplicated `global_legend`, `global_title` |
 
-Render every example at once:
+Render every example at once (still from `examples/`):
 
 ```bash
-for f in examples/configs/*.yaml; do figspec --config "$f"; done
+for f in configs/*.yaml; do figspec --config "$f"; done
 ```
 
 ### How paths inside a config resolve

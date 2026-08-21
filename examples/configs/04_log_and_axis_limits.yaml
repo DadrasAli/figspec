@@ -2,10 +2,10 @@
 # sanity check for exponential decay). y_axis_set: maxmin fits the data
 # with a 5% margin; x_axis_set here pins an explicit range instead.
 series:
-  - csv: "../csv/client_a.csv"
+  - csv: "csv/client_a.csv"
     column: "loss"
     label: "Client A loss"
-  - csv: "../csv/client_b.csv"
+  - csv: "csv/client_b.csv"
     column: "loss"
     label: "Client B loss"
 
@@ -16,4 +16,4 @@ y_log: true
 y_axis_set: "maxmin"
 x_axis_set: [0.5, 6.5]
 use_grid: true
-output_basename: "examples/out/04_log_and_axis_limits"
+output_basename: "out/04_log_and_axis_limits"

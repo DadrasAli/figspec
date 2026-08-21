@@ -1,8 +1,8 @@
 series:
-  - csv: "../csv/client_a.csv"
+  - csv: "csv/client_a.csv"
     column: "loss"
     label: "Client A"
-  - csv: "../csv/client_b.csv"
+  - csv: "csv/client_b.csv"
     column: "loss"
     label: "Client B"
 title: "Loss"
@@ -10,4 +10,4 @@ x_label: "Round"
 y_label: "Loss"
 y_log: true
 use_grid: true
-output_basename: "examples/out/13b_panel_loss"
+output_basename: "out/13b_panel_loss"
