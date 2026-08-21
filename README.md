@@ -73,9 +73,6 @@ running `figspec --config csvs/figure.yaml` from `my-project/` writes
 [How paths inside a config resolve](#how-paths-inside-a-config-resolve) for
 the full rules.
 
-A composite config (multiple panels assembled from other configs) is
-detected automatically — same command, no separate flag.
-
 ## Examples
 
 [`examples/`](examples/) has one config per feature, each on a tiny
