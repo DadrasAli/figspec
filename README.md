@@ -1,19 +1,17 @@
 # figspec
 
-**Publication-quality figures from declarative YAML specifications.**
+## Publication-quality figures from declarative YAML specifications
 
-`figspec` separates the description of a figure from the code that draws it.
-A specification declares what the figure contains — data sources, series,
-transformations, axes, annotations, and output formats — and the renderer
-produces it via matplotlib. Specifications are validated before rendering,
-version-controllable alongside the data they describe, and reproducible
-across runs.
+`figspec` separates figure specification from rendering code. A config
+defines the data sources, series, transformations, axes, annotations, and
+output formats; the renderer validates the specification and generates the
+figure with matplotlib.
 
-Built for research workflows where figures are regenerated as results
-evolve, and where a paper's figures should be reconstructible from source.
+It is designed for research workflows where figures are repeatedly
+regenerated as results change and must remain reproducible from source.
 
-Specifications are plain YAML files, referred to below as configs — the term
-used by the `--config` flag and the tool's own messages.
+Specifications are plain YAML files, referred to as **configs**, matching
+the `--config` flag and the tool's own terminology.
 
 ## Install
 
