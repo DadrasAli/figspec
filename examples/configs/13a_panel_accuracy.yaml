@@ -1,5 +1,5 @@
 # A composite's panels are just ordinary plot configs, unmodified -- this
-# file also renders standalone (try: csv_plotter.py --config 13a_panel_accuracy.yaml).
+# file also renders standalone (try: figspec.py --config 13a_panel_accuracy.yaml).
 series:
   - csv: "../csv/client_a.csv"
     column: "acc"

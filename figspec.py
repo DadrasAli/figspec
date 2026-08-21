@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-General CSV plotter driven by YAML configs.
+figspec: render figures from a declarative YAML spec, backed by pandas/CSV
+data and matplotlib.
 
 A config needs only a 'series' list and an 'output_basename'; every other
 key has a default. Supported series:
@@ -11,10 +12,10 @@ key has a default. Supported series:
 Figures can also be assembled into multi-panel composites from existing
 plot configs.
 
-  csv_plotter.py --config figure.yaml
-  csv_plotter.py --config composite.yaml
-  csv_plotter.py --config figure.yaml --check
-  csv_plotter.py --config figure.yaml -o out/final --format pdf --dpi 600
+  figspec.py --config figure.yaml
+  figspec.py --config composite.yaml
+  figspec.py --config figure.yaml --check
+  figspec.py --config figure.yaml -o out/final --format pdf --dpi 600
 
 SECURITY: 'python' blocks in a config are executed with full privileges.
 Treat a config like a script you are about to run.
@@ -478,7 +479,7 @@ def _load_external_module(path):
     if module is not None:
         return module
 
-    module_name = f"csv_plotter_transforms_{abs(hash(key))}"
+    module_name = f"figspec_transforms_{abs(hash(key))}"
     spec = importlib.util.spec_from_file_location(module_name, path)
     module = importlib.util.module_from_spec(spec)
     try:
@@ -1756,7 +1757,7 @@ def _apply_cli_overrides(cfg, args):
 
 def build_parser():
     parser = argparse.ArgumentParser(
-        prog="csv_plotter",
+        prog="figspec",
         description="Render a figure from a YAML plot or composite config.",
     )
     parser.add_argument(

@@ -5,13 +5,13 @@ the CSV next to the rendered figure and see exactly which number produced
 which point. Run any one from this directory:
 
 ```bash
-python ../csv_plotter.py --config configs/01_minimal.yaml
+python ../figspec.py --config configs/01_minimal.yaml
 ```
 
 Outputs land in `out/`. Validate a config without rendering it:
 
 ```bash
-python ../csv_plotter.py --config configs/01_minimal.yaml --check
+python ../figspec.py --config configs/01_minimal.yaml --check
 ```
 
 ## Index
@@ -36,10 +36,10 @@ Not covered by a dedicated config (they're CLI/output concerns, not YAML):
 
 ```bash
 # override output path, dpi, and formats without editing the file
-python ../csv_plotter.py --config configs/01_minimal.yaml -o out/custom --dpi 150 --format svg --format pdf
+python ../figspec.py --config configs/01_minimal.yaml -o out/custom --dpi 150 --format svg --format pdf
 
 # render every config in a directory
-for f in configs/*.yaml; do python ../csv_plotter.py --config "$f"; done
+for f in configs/*.yaml; do python ../figspec.py --config "$f"; done
 ```
 
 ## Two things worth knowing before you write your own

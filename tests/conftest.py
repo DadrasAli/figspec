@@ -15,9 +15,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 @pytest.fixture(scope="session")
 def plotter():
-    """Import csv_plotter.py by path so the tests need no packaging step."""
+    """Import figspec.py by path so the tests need no packaging step."""
     spec = importlib.util.spec_from_file_location(
-        "csv_plotter", PROJECT_ROOT / "csv_plotter.py"
+        "figspec", PROJECT_ROOT / "figspec.py"
     )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)

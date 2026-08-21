@@ -1,6 +1,6 @@
 # df_python filters the dataframe before the column is read; y_python
 # transforms the y array afterwards. Both get 'np'/'pd' in scope and run
-# with full Python privileges -- see the SECURITY note in csv_plotter.py.
+# with full Python privileges -- see the SECURITY note in figspec.py.
 # noisy.csv zig-zags (10,40,15,45,20,50) so the smoothing effect is obvious.
 series:
   - csv: "../csv/noisy.csv"

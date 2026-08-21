@@ -1,6 +1,6 @@
 # background_color switches to a dark figure. Ticks, spines, labels and the
 # legend frame all auto-flip to a readable foreground color, and the default
-# tab10 color cycle auto-brightens so it stays visible (see csv_plotter.py's
+# tab10 color cycle auto-brightens so it stays visible (see figspec.py's
 # _apply_foreground_contrast / _auto_colors_for_background).
 series:
   - csv: "../csv/client_a.csv"
