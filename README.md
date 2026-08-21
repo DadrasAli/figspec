@@ -87,15 +87,19 @@ detected automatically — same command, no separate flag.
 
 **`pipx install` (above) does not include these.** It installs only the
 `figspec` module — enough to run configs against your own data — not the
-rest of the repository. The examples live in git, so trying them means
-cloning it:
+rest of the repository. The examples live in git; this pulls down just the
+`examples/` directory, not the whole repository:
 
 ```bash
-git clone git@github.com:DadrasAli/figspec.git
-cd figspec
+git clone --filter=blob:none --no-checkout --depth 1 --sparse \
+    git@github.com:DadrasAli/figspec.git figspec-examples
+cd figspec-examples
+git sparse-checkout init --no-cone
+git sparse-checkout set '/examples/*'
+git checkout
 ```
 
-Then, from the repository root:
+Then, from `figspec-examples/`:
 
 ```bash
 figspec --config examples/configs/01_minimal.yaml
