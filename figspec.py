@@ -90,6 +90,7 @@ FIGURE_DEFAULTS = {
     "right_margin": 0.75,
     "use_tex": False,
     "x_column": None,
+    "skip_missing": False,
     "end_list_global": None,
     "text_boxes": [],
 }
@@ -110,6 +111,8 @@ FIGURE_ALIASES = {
     "grid": "use_grid",
     "output": "output_basename",
     "legend_ncol": "legend_columns",
+    "connect_gaps": "skip_missing",
+    "dropna": "skip_missing",
 }
 
 #: Keys a config may contain that are not covered by FIGURE_DEFAULTS.
@@ -124,7 +127,7 @@ FIGURE_EXTRA_KEYS = {
 
 #: Keys accepted inside one entry of the 'series' list.
 SERIES_KEYS = {
-    "type", "label", "csv", "column", "x_column",
+    "type", "label", "csv", "column", "x_column", "skip_missing",
     "end", "end_list",
     "color", "line_style", "line_styles", "line_width",
     "marker", "markers", "marker_size", "marker_every",
@@ -716,6 +719,34 @@ def _align_arrays(arrs, mode="min"):
     return [a[:m] for a in arrs]
 
 
+def _drop_missing(x, y, low=None, high=None, where="series"):
+    """
+    Drop the points whose x or y is empty, keeping the rest in order.
+
+    Matplotlib breaks a line at every NaN, so a sparsely filled column is
+    drawn as isolated dots with a stub of line wherever two rows happen to
+    be adjacent. 'skip_missing' removes the holes instead, which joins the
+    values that do exist into one continuous line. A band alongside them is
+    trimmed to the same rows so it stays attached to its series.
+    """
+    arrs = [np.asarray(x), np.asarray(y)]
+    if low is not None:
+        arrs.extend([np.asarray(low), np.asarray(high)])
+    arrs = _align_arrays(arrs, "min")
+
+    keep = ~(pd.isna(arrs[0]) | pd.isna(arrs[1]))
+    if not keep.all():
+        if not keep.any():
+            raise ConfigError(
+                f"{where} has no usable points left after 'skip_missing' "
+                "dropped the empty ones -- the column is entirely empty."
+            )
+        arrs = [a[keep] for a in arrs]
+
+    if low is None:
+        return arrs[0], arrs[1], None, None
+    return arrs[0], arrs[1], arrs[2], arrs[3]
+
 
 _TEXT_BOX_POSITIONS = {
     "top_left": (0.02, 0.98, "left", "top"),
@@ -960,6 +991,9 @@ def _render_plot_on_axes(
             x = np.arange(1, len(y) + 1)
         elif len(x) != len(y):
             x, y = _align_arrays([np.asarray(x), np.asarray(y)], "min")
+
+        if spec.get("skip_missing", cfg["skip_missing"]):
+            x, y, low, high = _drop_missing(x, y, low, high, diag_label)
 
         all_y.append(y)
 

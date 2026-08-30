@@ -4,6 +4,8 @@ import numpy as np
 import pytest
 from matplotlib import pyplot as plt
 
+from conftest import FILLED_ROWS, FILLED_X
+
 
 def render(plotter, cfg, **kwargs):
     """Render a config onto a throwaway axes and hand back the axes."""
@@ -306,6 +308,121 @@ def test_alpha_and_zorder_are_applied(plotter, base_config):
     fig, ax = render(plotter, base_config)
     assert ax.lines[0].get_alpha() == 0.4
     assert ax.lines[0].get_zorder() == 7
+    plt.close(fig)
+
+
+# ----------------------------------------------------------------------
+# Missing values ('skip_missing')
+# ----------------------------------------------------------------------
+
+def sparse_series(data_dir, **extra):
+    """One series over the gappy column of sparse.csv."""
+    spec = {"csv": str(data_dir / "sparse.csv"), "column": "acc", "label": "S"}
+    spec.update(extra)
+    return spec
+
+
+def test_empty_cells_break_the_line_by_default(
+    plotter, base_config, data_dir
+):
+    base_config["series"] = [sparse_series(data_dir)]
+    fig, ax = render(plotter, base_config)
+    y = ax.lines[0].get_ydata()
+    assert len(y) == 20
+    assert np.isnan(np.asarray(y, dtype=float)).any()
+    plt.close(fig)
+
+
+def test_skip_missing_connects_the_values_that_exist(
+    plotter, base_config, data_dir
+):
+    base_config["x_column"] = "round"
+    base_config["series"] = [sparse_series(data_dir, skip_missing=True)]
+    fig, ax = render(plotter, base_config)
+    x, y = ax.lines[0].get_xdata(), ax.lines[0].get_ydata()
+    assert list(x) == FILLED_X
+    assert list(y) == [FILLED_ROWS[i] for i in sorted(FILLED_ROWS)]
+    assert not np.isnan(np.asarray(y, dtype=float)).any()
+    plt.close(fig)
+
+
+def test_skip_missing_without_an_x_column_keeps_the_row_positions(
+    plotter, base_config, data_dir
+):
+    """The kept points stay at their own row index, not renumbered 1..N."""
+    base_config["series"] = [sparse_series(data_dir, skip_missing=True)]
+    fig, ax = render(plotter, base_config)
+    assert list(ax.lines[0].get_xdata()) == FILLED_X
+    plt.close(fig)
+
+
+def test_skip_missing_at_figure_level_applies_to_every_series(
+    plotter, base_config, data_dir
+):
+    base_config["skip_missing"] = True
+    base_config["series"] = [
+        sparse_series(data_dir, label="one"),
+        sparse_series(data_dir, label="two"),
+    ]
+    fig, ax = render(plotter, base_config)
+    assert [len(line.get_ydata()) for line in ax.lines] == [8, 8]
+    plt.close(fig)
+
+
+def test_a_series_may_opt_out_of_a_figure_level_skip_missing(
+    plotter, base_config, data_dir
+):
+    base_config["skip_missing"] = True
+    base_config["series"] = [
+        sparse_series(data_dir, label="kept", skip_missing=False),
+        sparse_series(data_dir, label="dropped"),
+    ]
+    fig, ax = render(plotter, base_config)
+    assert [len(line.get_ydata()) for line in ax.lines] == [20, 8]
+    plt.close(fig)
+
+
+def test_skip_missing_also_drops_rows_whose_x_is_missing(
+    plotter, base_config, data_dir
+):
+    """A value with nowhere to sit on the x axis cannot be plotted either."""
+    base_config["x_column"] = "sparse_round"
+    base_config["series"] = [sparse_series(data_dir, skip_missing=True)]
+    fig, ax = render(plotter, base_config)
+    assert list(ax.lines[0].get_xdata()) == [x for x in FILLED_X if x != 3]
+    plt.close(fig)
+
+
+def test_skip_missing_trims_a_band_to_the_same_rows(
+    plotter, base_config, data_dir
+):
+    base_config["x_column"] = "round"
+    base_config["series"] = [
+        sparse_series(data_dir, skip_missing=True, band=["lo", "hi"])
+    ]
+    fig, ax = render(plotter, base_config)
+    vertices = ax.collections[0].get_paths()[0].vertices
+    assert not np.isnan(vertices).any()
+    assert set(vertices[:, 0]) == set(FILLED_X)
+    plt.close(fig)
+
+
+def test_skip_missing_on_an_entirely_empty_column_is_rejected(
+    plotter, base_config, data_dir
+):
+    base_config["series"] = [
+        sparse_series(data_dir, column="empty", skip_missing=True)
+    ]
+    with pytest.raises(plotter.ConfigError, match="skip_missing"):
+        render(plotter, base_config)
+
+
+def test_skip_missing_leaves_a_complete_column_untouched(
+    plotter, base_config
+):
+    base_config["skip_missing"] = True
+    fig, ax = render(plotter, base_config)
+    assert len(ax.lines[0].get_ydata()) == 20
     plt.close(fig)
 
 

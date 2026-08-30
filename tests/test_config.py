@@ -56,6 +56,8 @@ def test_unknown_series_key_is_rejected(plotter, base_config):
         ("line_style", "line_styles"),
         ("fontsize_title", "font_size_title"),
         ("legend_ncol", "legend_columns"),
+        ("connect_gaps", "skip_missing"),
+        ("dropna", "skip_missing"),
     ],
 )
 def test_aliases_resolve_to_canonical_names(
@@ -84,6 +86,17 @@ def test_single_series_requires_csv_and_column(plotter, base_config):
     del base_config["series"][0]["column"]
     with pytest.raises(plotter.ConfigError, match="missing 'column'"):
         plotter.normalise_plot_config(base_config)
+
+
+def test_skip_missing_defaults_to_off(plotter, base_config):
+    cfg = plotter.normalise_plot_config(base_config)
+    assert cfg["skip_missing"] is False
+
+
+def test_skip_missing_is_accepted_per_series(plotter, base_config):
+    base_config["series"][0]["skip_missing"] = True
+    cfg = plotter.normalise_plot_config(base_config)
+    assert cfg["series"][0]["skip_missing"] is True
 
 
 def test_unsupported_output_format_is_rejected(plotter, base_config):

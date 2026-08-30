@@ -12,6 +12,15 @@ matplotlib.use("Agg")
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
+#: The only filled rows of sparse.csv's 'acc' column, as {row index: value}.
+FILLED_ROWS = {
+    0: 0.10, 2: 0.22, 5: 0.41, 6: 0.46,
+    10: 0.58, 12: 0.65, 13: 0.67, 16: 0.74,
+}
+
+#: The 'round' values those rows sit at, in order.
+FILLED_X = [1, 3, 6, 7, 11, 13, 14, 17]
+
 
 @pytest.fixture(scope="session")
 def plotter():
@@ -63,6 +72,27 @@ def data_dir(tmp_path):
     frame["lo"] = frame["mean"] - frame["std"]
     frame["hi"] = frame["mean"] + frame["std"]
     frame.to_csv(tmp_path / "seeds.csv", index=False)
+
+    # A gappy column: 20 rows with only 8 of them filled, including runs of
+    # consecutive blanks -- the input 'skip_missing' exists for. 'lo'/'hi'
+    # carry the same holes so a band can be trimmed alongside it, and
+    # 'sparse_round' is an x column that is itself missing a value.
+    gappy = np.full(20, np.nan)
+    for index, value in FILLED_ROWS.items():
+        gappy[index] = value
+    sparse_round = steps.astype(float).copy()
+    sparse_round[2] = np.nan
+
+    pd.DataFrame(
+        {
+            "round": steps,
+            "sparse_round": sparse_round,
+            "acc": gappy,
+            "lo": gappy - 0.05,
+            "hi": gappy + 0.05,
+            "empty": np.full(20, np.nan),
+        }
+    ).to_csv(tmp_path / "sparse.csv", index=False)
 
     return tmp_path
 

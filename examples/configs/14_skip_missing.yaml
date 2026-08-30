@@ -1,0 +1,28 @@
+# Empty cells in a column become NaN, and Matplotlib breaks a line at every
+# NaN -- a sparse column renders as loose dots. 'skip_missing' drops those
+# rows instead, so the values that do exist are joined into one line.
+#
+# Both series below read the same gappy column: the first takes the default,
+# the second removes the holes.
+x_column: "round"
+series:
+  - csv: "csvs/sparse.csv"
+    column: "acc"
+    label: "Default: line breaks at each gap"
+    marker: "X"
+    color: "0.6"
+    marker_size: 10
+    line_width: 7
+
+  - csv: "csvs/sparse.csv"
+    column: "acc"
+    label: "skip_missing: gaps removed"
+    skip_missing: true
+    marker: "s"
+    marker_size: 4
+
+title: "skip_missing: connect what exists"
+x_label: "Round"
+y_label: "Accuracy"
+use_grid: true
+output_basename: "out/14_skip_missing"

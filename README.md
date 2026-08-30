@@ -62,8 +62,8 @@ writes `out/accuracy.png`/`.pdf` — `out/` didn't need to exist beforehand,
 
 ## Examples
 
-[`examples/`](examples/) has one config per feature, each on a tiny
-(5-6 row) CSV so the output is easy to verify by eye against the source data.
+[`examples/`](examples/) has one config per feature, each on a tiny CSV so
+the output is easy to verify by eye against the source data.
 
 **`pipx install` (above) does not include these** — it installs only the
 `figspec` module, not the rest of the repository. Download them separately:
@@ -96,6 +96,7 @@ Outputs land in `out/`.
 | 11 | [11_text_boxes.yaml](examples/configs/11_text_boxes.yaml) | `text_boxes`: a named anchor and an `[x, y]` position with a styled box |
 | 12 | [12_outside_legend.yaml](examples/configs/12_outside_legend.yaml) | `legend_outside` + `legend_bbox` + `right_margin` |
 | 13 | [13_composite.yaml](examples/configs/13_composite.yaml) (panels: [13a](examples/configs/13a_panel_accuracy.yaml), [13b](examples/configs/13b_panel_loss.yaml)) | Composite figure: panel labels, `series_overrides`, deduplicated `global_legend`, `global_title` |
+| 14 | [14_skip_missing.yaml](examples/configs/14_skip_missing.yaml) | `skip_missing` — drop the empty cells in a column so the values that do exist join into one line, instead of the line breaking at every gap |
 
 ## Developing figspec
 
