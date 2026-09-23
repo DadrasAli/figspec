@@ -35,7 +35,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import colors as mcolors
-from matplotlib.ticker import AutoMinorLocator
+from matplotlib.ticker import AutoMinorLocator, LogLocator
 import textwrap
 
 #: Output formats _save_figure() knows how to write.
@@ -1095,8 +1095,18 @@ def _render_plot_on_axes(
         if cfg["minor_grid"]:
             ax.minorticks_on()
             divisions = cfg["minor_grid_divisions"]
-            ax.xaxis.set_minor_locator(AutoMinorLocator(divisions))
-            ax.yaxis.set_minor_locator(AutoMinorLocator(divisions))
+            if allow_x_log and cfg["x_log"]:
+                ax.xaxis.set_minor_locator(
+                    LogLocator(subs=np.arange(2, 10, 8 / divisions))
+                )
+            else:
+                ax.xaxis.set_minor_locator(AutoMinorLocator(divisions))
+            if allow_y_log and cfg["y_log"]:
+                ax.yaxis.set_minor_locator(
+                    LogLocator(subs=np.arange(2, 10, 8 / divisions))
+                )
+            else:
+                ax.yaxis.set_minor_locator(AutoMinorLocator(divisions))
             ax.grid(
                 True,
                 which="minor",
